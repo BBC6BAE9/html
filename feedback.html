@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Feedback Form</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<style>
+		.container {
+			margin-top: 50px;
+		}
+		.form-group label {
+			font-weight: bold;
+		}
+		.form-group textarea {
+			height: 150px;
+		}
+		.btn-submit {
+			margin-top: 20px;
+		}
+		.alert {
+			margin-top: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Feedback Form</h1>
+		<form>
+			<div class="form-group">
+				<label for="name">Name:</label>
+				<input type="text" class="form-control" id="name" required>
+			</div>
+			<div class="form-group">
+				<label for="email">Email:</label>
+				<input type="email" class="form-control" id="email" required>
+			</div>
+			<div class="form-group">
+				<label for="feedback">Feedback:</label>
+				<textarea class="form-control" id="feedback" required></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary btn-submit">Submit</button>
+		</form>
+		<div class="alert alert-success" role="alert" style="display: none;">
+			Feedback submitted successfully!
+		</div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script>
+		$(function() {
+			var submitted = false;
+			$('form').submit(function(event) {
+				event.preventDefault();
+				if (!submitted) {
+					$.ajax({
+						url: 'http://my-json-server.typicode.com/Lin152/myjson/posts',
+						type: 'GET',
+						success: function(response) {
+							// 显示提示
+							$('.alert').show();
+							submitted = true;
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							console.log(textStatus + ': ' + errorThrown);
+						}
+					});
+				}
+			});
+		});
+	</script>
+</body>
+</html>
